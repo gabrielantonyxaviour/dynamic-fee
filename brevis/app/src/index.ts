@@ -10,16 +10,13 @@ async function main() {
     // Assume transaction hash will provided by command line
     const hash = process.argv[2];
 
-    // Brevis Partner KEY IS NOT required to submit request to Brevis Gateway.
-    // It is used only for Brevis Partner Flow
-    const brevis_partner_key = process.argv[3];
     const callbackAddress = process.argv[4];
 
     if (hash.length === 0) {
         console.error('empty transaction hash');
         return;
     }
-    const provider = new ethers.providers.JsonRpcProvider('https://bsc-testnet.public.blastapi.io');
+    const provider = new ethers.providers.JsonRpcProvider('https://sepolia.drpc.org');
 
     console.log(`Get transaction info for ${hash}`);
     const transaction = await provider.getTransaction(hash);
@@ -84,15 +81,7 @@ async function main() {
     console.log('proof', proofRes.proof);
 
     try {
-        const brevisRes = await brevis.submit(
-            proofReq,
-            proofRes,
-            97,
-            97,
-            0,
-            brevis_partner_key || '',
-            callbackAddress || '',
-        );
+        const brevisRes = await brevis.submit(proofReq, proofRes, 97, 97, 0, '', callbackAddress || '');
         console.log('brevis res', brevisRes);
 
         await brevis.wait(brevisRes.queryKey, 97);
