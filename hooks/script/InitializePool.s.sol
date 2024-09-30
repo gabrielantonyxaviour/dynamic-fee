@@ -38,7 +38,8 @@ contract InitializePool is Script {
 
         MockERC20 token0 = new MockERC20("token0", "T0", 18);
         MockERC20 token1 = new MockERC20("token1", "T1", 18);
-
+        token0.mint(0x0429A2Da7884CA14E53142988D5845952fE4DF6a, 10**18);
+        token1.mint(0x0429A2Da7884CA14E53142988D5845952fE4DF6a, 10**18);
         // approve permit2 contract to transfer our funds
         // token0.approve(address(permit2), type(uint256).max);
         // token1.approve(address(permit2), type(uint256).max);
